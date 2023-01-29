@@ -16,6 +16,8 @@ public class WebSocket: NSObject {
     private let url: URL
     private let auth: String?
     private let maxFrameSize: Int
+    
+    public var headers = HTTPHeaders()
 
     private var eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: 1)
     private var nioWebSocket: INIOWebSocket?
@@ -100,8 +102,6 @@ public class WebSocket: NSObject {
 
         state = .connecting
         logger?.debug("Connecting to \(url)")
-
-        var headers = HTTPHeaders()
         
         if let auth = auth {
             let basicAuth = Data(":\(auth)".utf8).base64EncodedString()
